@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Database deadlock case analysis on GBA system</title>
+
+  <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+  <meta name="author" content="Hakim El Hattab">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- highlight Theme -->
+  
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/monokai.min.css">
+  
+	
+		
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css">
+	
+	
+	
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/customcontrols/style.css">
+  
+	
+
+
+
+  <!-- Revealjs Theme -->
+  
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/night.css" id="theme">
+  
+  
+
+  <link rel="stylesheet" href="libs/styles/tasklist.css">
+	<link rel="stylesheet" href="libs/styles/iota.css">
+	<link rel="stylesheet" href="libs/styles/layout.css">
+
+
+  <!-- Revealjs Theme -->
+  
+
+   <!-- css list -->
+	
+
+   
+
+</head>
+
+<body>
+
+   
+    <div id="logo" style="position: fixed; top: 20px; left: 20px; z-index: 1; height:3rem;">
+        <img src="assets/0. 1130923-DeadLock Case Analysis slide/logo.png" style="height:100%"/>
+    </div>
+
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+        <section >
+            
+            <h1 class="some-class" style="background:blue">Database deadlock </h1>
+<p data-toggle="modal">case analysis on GBA system</p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Why the Event Occur?</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8683657"><label class="task-list-item-label" for="task-item-8683657"> 113-8-9 SQL Server Upgrade from 2014 to 2019</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8163608"><label class="task-list-item-label" for="task-item-8163608"> 113-8-10 ~ 113-09-13 DeadLock Occasionally</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7314506"><label class="task-list-item-label" for="task-item-7314506"> Continued to do Code Optimise</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-6617363"><label class="task-list-item-label" for="task-item-6617363"> 113-9-15 ~ 113-09-18 DeadLock Usually</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3452853"><label class="task-list-item-label" for="task-item-3452853"> 113-9-19 ~ 113-09-25 System Crash</label></li>
+</ul>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3>What did I do at 20th of September?</h3>
+<p>Umm…Deadlock…So…😕</p>
+<a href="#" class="navigate-down">
+    <img width="178" height="238" data-src="assets/0. 1130923-DeadLock Case Analysis slide/arrow.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+            <section >
+                <h2>Pre-Information📧</h2>
+<a class="navigate-down">
+    <img width="1500" height="400" data-src="assets/0. 1130923-DeadLock Case Analysis slide/DeadLockMail.png" alt="Down arrow">
+</a>
+<p>Umm…Was the data enough for me ?..Did I have more informations?</p>
+
+            </section>
+        
+            <section >
+                <h2>How did I think?🤔</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3361320"><label class="task-list-item-label" for="task-item-3361320"> Cycle ?</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4016590"><label class="task-list-item-label" for="task-item-4016590"> Which type is the deadlock event?</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-536563"><label class="task-list-item-label" for="task-item-536563"> How do I get the deadlock gragh?</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-699948"><label class="task-list-item-label" for="task-item-699948"> SQL Server Profile?</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-6147989"><label class="task-list-item-label" for="task-item-6147989"> Extented Events?</label></li>
+</ul>
+<a>
+    <img width="178" height="238" data-src="assets/0. 1130923-DeadLock Case Analysis slide/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
+</a>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3>First: Collect Information</h3>
+<h4>SQL Server Profile</h4>
+<ul>
+<li>But it fails…Why?😱</li>
+<li>Performance needs high costs.</li>
+<li>GBA Server couldn’t work.</li>
+<li><strong>Alternative ? Extented Events</strong></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h3>First: Collect Information</h3>
+<h4>Extented Events</h4>
+<ul>
+<li>lightweight performance monitoring.</li>
+<li>It has a default setting that is system health.</li>
+<li>But its default size is too small and it has many information I don’t care.</li>
+</ul>
+<a href="#" class="navigate-down">
+    <img width="300" height="400" data-src="assets/0. 1130923-DeadLock Case Analysis slide/system_health.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+            <section >
+                <h3>How to create a new Extented Events for myself?</h3>
+<ul>
+<li>In order to collect more information for a long time.</li>
+<li>So I create a new Extented Events whitch name is deadlock.</li>
+</ul>
+<a href="#" class="navigate-down">
+    <img width="300" height="400" data-src="assets/0. 1130923-DeadLock Case Analysis slide/system_health.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+            <section >
+                <h3>How to create a new Extented Events for myself?</h3>
+<iframe data-src="assets/0. 1130923-DeadLock Case Analysis slide/How do I Create Extened Events.pdf" width="1000" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen=""></iframe>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3>Second: Deadlock Information</h3>
+<h4>xml_deadlock_report</h4>
+<a href="#" class="navigate-down">
+    <img width="1000" height="400" data-src="assets/0. 1130923-DeadLock Case Analysis slide/xml_deadlock_report.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+            <section >
+                <h3>Retrieve XML…<BR>But how to user-friendly</h3>
+<pre><code class="language-xml">&lt;deadlock&gt;
+&lt;victim-list&gt;
+&lt;victimProcess id=&quot;process1719d45a108&quot;/&gt;
+&lt;/victim-list&gt;
+&lt;process-list&gt;
+&lt;process id=&quot;process1719d45a108&quot; taskpriority=&quot;0&quot; logused=&quot;0&quot; waitresource=&quot;PAGE: 24:1:557261 &quot; waittime=&quot;3884&quot; ownerId=&quot;37192585&quot; transactionname=&quot;SELECT&quot; lasttranstarted=&quot;2024-09-24T13:44:21.273&quot; XDES=&quot;0x174a4ba99b0&quot; lockMode=&quot;S&quot; schedulerid=&quot;16&quot; kpid=&quot;8640&quot; status=&quot;suspended&quot; spid=&quot;904&quot; sbid=&quot;0&quot; ecid=&quot;16&quot; priority=&quot;0&quot; trancount=&quot;0&quot; lastbatchstarted=&quot;2024-09-24T13:44:21.097&quot; lastbatchcompleted=&quot;2024-09-24T13:44:20.777&quot; lastattention=&quot;1900-01-01T00:00:00.777&quot; clientapp=&quot;Microsoft JDBC Driver for SQL Server&quot; hostname=&quot;V5P-CGBA-AP7&quot; hostpid=&quot;0&quot; isolationlevel=&quot;read committed (2)&quot; xactid=&quot;37192585&quot; currentdb=&quot;24&quot; currentdbname=&quot;WGBA2300A&quot; lockTimeout=&quot;4294967295&quot; clientoption1=&quot;671088672&quot; clientoption2=&quot;128056&quot;&gt;
+&lt;executionStack&gt;
+&lt;frame procname=&quot;adhoc&quot; line=&quot;1&quot; stmtend=&quot;2716&quot; sqlhandle=&quot;0x02000000d6cba40c9b3f55accc25c12321ecb1c6bfb0a8da0000000000000000000000000000000000000000&quot;&gt; unknown &lt;/frame&gt;
+&lt;frame procname=&quot;unknown&quot; line=&quot;1&quot; sqlhandle=&quot;0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;&gt; unknown &lt;/frame&gt;
+&lt;/executionStack&gt;
+&lt;inputbuf&gt; select agvoucherd0_.targetDeducId as col_0_0_, sum(agvoucherd0_.amount) as col_1_0_ from CGBA.AG_VoucherDetailDeduc agvoucherd0_ cross join CGBA.AG_VoucherDetail agvoucherd1_ cross join CGBA.AG_Voucher agvoucher2_ cross join CGBA.AG_VoucherDetail agvoucherd11_ cross join CGBA.AG_Voucher agvoucher12_ where agvoucherd0_.sourceDeducId=agvoucherd1_.id and agvoucherd1_.masterId=agvoucher2_.id and agvoucherd0_.targetDeducId=agvoucherd11_.id and agvoucherd11_.masterId=agvoucher12_.id and 1=1 and agvoucher2_.fiscalYear='113' and agvoucher2_.accountType='7' and agvoucher2_.agencyNo='23050' and isnull(agvoucher2_.specialBudgetNo, '')='' and agvoucher2_.autodate&lt;='1130919' and agvoucher12_.postflag='1' and agvoucher2_.postflag='1' and (agvoucher12_.cancelflag&lt;&gt;'1' or agvoucher12_.cancelflag is null) and (agvoucher2_.cancelflag&lt;&gt;'1' or agvoucher2_.cancelflag is null) and (agvoucher2_.entryno not in ('5Z0002' , '5Z0003' , '5Z0004' , '5Z0005' , '5Z0003' , '5Z0003R' , '5Z0005' , '5Z0005R')) and (agvoucher12_.entryno not i &lt;/inputbuf&gt;
+&lt;/process&gt;
+&lt;process id=&quot;process1796f435848&quot; taskpriority=&quot;0&quot; logused=&quot;648&quot; waitresource=&quot;PAGE: 24:1:969290 &quot; waittime=&quot;3957&quot; ownerId=&quot;37197047&quot; transactionname=&quot;implicit_transaction&quot; lasttranstarted=&quot;2024-09-24T13:44:21.483&quot; XDES=&quot;0x179791a8428&quot; lockMode=&quot;IX&quot; schedulerid=&quot;13&quot; kpid=&quot;4740&quot; status=&quot;suspended&quot; spid=&quot;627&quot; sbid=&quot;0&quot; ecid=&quot;0&quot; priority=&quot;0&quot; trancount=&quot;2&quot; lastbatchstarted=&quot;2024-09-24T13:44:21.490&quot; lastbatchcompleted=&quot;2024-09-24T13:44:21.487&quot; lastattention=&quot;1900-01-01T00:00:00.487&quot; clientapp=&quot;Microsoft JDBC Driver for SQL Server&quot; hostname=&quot;V5P-CGBA-AP5&quot; hostpid=&quot;0&quot; loginname=&quot;cgbasys&quot; isolationlevel=&quot;read committed (2)&quot; xactid=&quot;37197047&quot; currentdb=&quot;24&quot; currentdbname=&quot;WGBA2300A&quot; lockTimeout=&quot;4294967295&quot; clientoption1=&quot;671088672&quot; clientoption2=&quot;128058&quot;&gt;
+&lt;executionStack&gt;
+&lt;frame procname=&quot;adhoc&quot; line=&quot;1&quot; stmtstart=&quot;2166&quot; stmtend=&quot;4328&quot; sqlhandle=&quot;0x02000000d053511eade857fdce2337610c580517fdf3c9430000000000000000000000000000000000000000&quot;&gt; unknown &lt;/frame&gt;
+&lt;frame procname=&quot;unknown&quot; line=&quot;1&quot; sqlhandle=&quot;0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;&gt; unknown &lt;/frame&gt;
+&lt;/executionStack&gt;
+&lt;inputbuf&gt; (@P0 nvarchar(4000),@P1 nvarchar(4000),@P2 float,@P3 varchar(8000),@P4 int,@P5 varchar(8000),@P6 varchar(8000),@P7 varchar(8000),@P8 nvarchar(4000),@P9 nvarchar(4000),@P10 nvarchar(4000),@P11 varchar(8000),@P12 varchar(8000),@P13 varchar(8000),@P14 nvarchar(4000),@P15 nvarchar(4000),@P16 nvarchar(4000),@P17 nvarchar(4000),@P18 nvarchar(4000),@P19 nvarchar(4000),@P20 varchar(8000),@P21 nvarchar(4000),@P22 varchar(8000),@P23 int,@P24 int,@P25 varchar(8000),@P26 varchar(8000),@P27 nvarchar(4000),@P28 varchar(8000),@P29 nvarchar(4000),@P30 varchar(8000),@P31 int,@P32 int,@P33 nvarchar(4000),@P34 varchar(8000),@P35 nvarchar(4000),@P36 varchar(8000),@P37 nvarchar(4000),@P38 varchar(8000),@P39 varchar(8000),@P40 varchar(8000),@P41 nvarchar(4000),@P42 nvarchar(4000),@P43 varchar(8000),@P44 varchar(8000),@P45 nvarchar(4000),@P46 nvarchar(4000),@P47 nvarchar(4000),@P48 nvarchar(4000),@P49 nvarchar(4000),@P50 varchar(8000),@P51 varchar(8000),@P52 varchar(8000),@P53 nvarchar(4000),@P54 nvarchar(4000),@P55 varchar(8000), &lt;/inputbuf&gt;
+&lt;/process&gt;
+&lt;/process-list&gt;
+&lt;/deadlock&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3>DeadLock Gragh</h3>
+<h4>But How to transform xml to XDL File?</h4>
+<a href="#" class="navigate-down">
+    <img width="1000" height="500" data-src="assets/0. 1130923-DeadLock Case Analysis slide/DeadLockGragh.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+            <section >
+                <h3>Transform xml to XDL File</h3>
+<h4>Using SolarWinds-PlanExplorer</h4>
+<a href="#" class="navigate-down">
+    <img width="1000" height="500" data-src="assets/0. 1130923-DeadLock Case Analysis slide/SolarWinds-PlanExplorer.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3>Third: Read DeadLock Info.</h3>
+<h4>DeadLock Graph</h4>
+<a href="#" class="navigate-down">
+    <img width="1000" height="500" data-src="assets/0. 1130923-DeadLock Case Analysis slide/DeadLockGragh.png" alt="Down arrow">
+</a>
+
+            </section>
+        
+            <section >
+                <h3>What did I get?</h3>
+<ul>
+<li>Page Lock</li>
+<li>Lock Table is AG_Voucher</li>
+<li>Record of AG_Voucher approx. 500,000</li>
+<li>The deadlock type is WR.</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h3>So I think…</h3>
+<ul>
+<li>Why the lock is not Row Lock?</li>
+<li>Lock Escalation?</li>
+<li>Why did the INSERT SQL statement execute so long?</li>
+<li>Did the transaction not commit?</li>
+<li>Index fragmentation?</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+        <section >
+            
+            <h1>THE END</h1>
+<hr>
+
+            </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  <div class="line top"></div>
+  <div class="line bottom"></div>
+  <div class="line left"></div>
+  <div class="line right"></div>
+
+  <script src="libs/reveal.js/4.3.1/reveal.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/fullscreen/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/svg.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/Chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/d3.v3.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3.patch.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/queue.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/topojson.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/function-plot.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/customcontrols/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/embed-tweet/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/verticator/verticator.js"></script>
+
+<script src="libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/search/search.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/menu/menu.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chalkboard/plugin.js"></script>
+
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/plugin.js"></script>  -->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/recorder.js"></script>-->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+  
+
+<script>
+  const printPlugins = [
+      RevealNotes,
+      RevealHighlight,
+      RevealMath.MathJax3,
+      RevealAnimate,
+      RevealChalkboard, 
+			RevealEmbedTweet,
+			RevealChart,
+		];
+
+		const plugins =  [...printPlugins,
+		RevealZoom, 
+		RevealSearch, 
+				RevealMarkdown, 
+				RevealMenu, 
+				RevealFullscreen,
+				RevealAnything,
+				//RevealAudioSlideshow,
+				//RevealAudioRecorder,
+				RevealCustomControls, 
+				// poll
+				// question
+				// seminar
+				Verticator 
+				 ]
+
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+      controlsTutorial: true,
+      controlsLayout: 'bottom-right',
+      controlsBackArrows: 'faded',
+      progress: true,
+      slideNumber: true,
+      //#showSlideNumber "all" "print" "speaker"
+      hash: true, //# hash: false,
+      //# respondToHashChanges: true,
+      //# history: false,
+      keyboard: true,
+      //#keyboardCondition: null,
+      overview: true,
+      center: true,
+      touch: true,
+      loop: false,
+      rtl: false,
+      //#navigationMode: 'default', linear grid
+      shuffle: false,
+      fragments: true,
+      fragmentInURL: false,
+      embedded: false,
+      help: true,
+      //#pause: true
+      showNotes: false,
+      autoPlayMedia: false, // TODO fix this to a nullable value
+      //#preloadIframes: null. true false
+      //#autoAnimate: true
+      //#autoAnimateMatcher: null,
+      //#autoAnimateEasing: 'ease',
+      //autoAnimateDuration: 1.0,
+      //#autoAnimateUnmatched: true
+      //#autoAnimateStyles: []
+      autoSlide: 0, // TODO fix this to a falseable value
+      autoSlideStoppable: true,
+      autoSlideMethod: '0',
+      defaultTiming: 120,
+      mouseWheel: false,
+      //#previewLinks: false
+      //#postMessage: true, // TODO : this can cause issues with the vscode api ???
+      //#postMessageEvents: false,
+      //#focusBodyOnPageVisibilityChange: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      //#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+      //#pdfSeparateFragments: true,
+      //#pdfPageHeightOffset: -1,
+      viewDistance: 3,
+      //#mobileViewDistance: 2,
+      display: 'block',
+      //#hideInactiveCursor: true,
+      //#hideCursorTime: 5000
+
+      // Parallax Background
+      parallaxBackgroundImage: '',
+      parallaxBackgroundSize: '',
+      parallaxBackgroundHorizontal: 0,
+      parallaxBackgroundVertical: 0,
+
+      //Presentation Size
+      width: 960,
+			height: 700,
+			margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      disableLayout: false,
+
+      audio: {
+        prefix: 'audio/', // audio files are stored in the "audio" folder
+        suffix: '.ogg', // audio files have the ".ogg" ending
+        textToSpeechURL: null, // the URL to the text to speech converter
+        defaultNotes: false, // use slide notes as default for the text to speech converter
+        defaultText: false, // use slide text as default for the text to speech converter
+        advance: 0, // advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+        autoplay: false, // automatically start slideshow
+        defaultDuration: 5, // default duration in seconds if no audio is available
+        defaultAudios: true, // try to play audios with names such as audio/1.2.ogg
+        playerOpacity: 0.05, // opacity value of audio player if unfocused
+        playerStyle: 'position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;', // style used for container of audio controls
+        startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+      },
+      
+      chalkboard: { // font-awesome.min.css must be available
+        //src: "chalkboard/chalkboard.json",
+        storage: "chalkboard-demo",
+      },
+      
+			customcontrols: {
+					controls: [
+      						{
+						  id: 'toggle-overview',
+						  title: 'Toggle overview (O)',
+						  icon: '<i class="fa fa-th"></i>',
+						  action: 'Reveal.toggleOverview();'
+						}
+						,
+      {
+        icon: '<i class="fa fa-pen-square"></i>',
+        title: 'Toggle chalkboard (B)',
+        action: 'RevealChalkboard.toggleChalkboard();'
+      },
+      {
+        icon: '<i class="fa fa-pen"></i>',
+        title: 'Toggle notes canvas (C)',
+        action: 'RevealChalkboard.toggleNotesCanvas();'
+      }
+      
+				]
+			},
+			chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+			},
+			math: {
+				mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+				config: 'TeX-AMS_HTML-full',
+				// pass other options into `MathJax.Hub.Config()`
+				TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				anything: [ 
+				{
+		className: "plot",
+		defaults: {width:500, height: 500, grid:true},
+		initialize: (function(container, options){ options.target = "#"+container.id; functionPlot(options) })
+	 },
+	 {
+		className: "chart",  
+		initialize: (function(container, options){ container.chart = new Chart(container.getContext("2d"), options);  })
+	 },
+	 {
+		className: "anything",
+		initialize: (function(container, options){ if (options && options.initialize) { options.initialize(container)} })
+	 },
+					],
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: (window.location.search.match(/print-pdf/gi) ? printPlugins : plugins ) 
+		});
+			
+
+
+	    // Change chalkboard theme : 
+		function changeTheme(input) {
+			var config = {};
+			config.theme = input.value;
+			Reveal.getPlugin("RevealChalkboard").configure(config);
+			input.blur();
+		}
+
+		// // Handle the message inside the webview
+        // window.addEventListener('message', event => {
+
+        //     const message = event.data; // The JSON data our extension sent
+
+        //     switch (message.command) {
+        //         case 'refactor':
+        //             Reveal.toggleHelp();
+        //     }
+        // });
+
+		if (window.location.search.match(/print-pdf-now/gi)) {
+      		setTimeout(() => {
+				window.print();
+			  }, 2500);
+			
+    }
+</script>
+
+</body>
+
+</html>
